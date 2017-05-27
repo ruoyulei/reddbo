@@ -6,37 +6,46 @@ import md5
 import urllib
 import random
 
-appid = '20151113000005349'
-secretKey = 'osubCEzlGjzvw8qdQc41'
+def baidu_tranlate( input_str,app_file ): 
+  
+  #  open file and read appid and secretKey
+  with open('app_file.txt', 'r') as f:
+    my_appid = f.readline()
+    my_secretKey= f.readline()
+  f.close() 
+
+  appid = my_appid 
+  secretKey = my_secretKey
 
  
-httpClient = None
-myurl = '/api/trans/vip/translate'
+  httpClient = None
+  myurl = '/api/trans/vip/translate'
 
-# Note: q is the input string
+  # Note: q is the input string
+  q = input_str
 
-q = 'apple'
 
+  fromLang = 'en'
+  toLang = 'zh'
+  salt = random.randint(32768, 65536)
 
-fromLang = 'en'
-toLang = 'zh'
-salt = random.randint(32768, 65536)
+  sign = appid+q+str(salt)+secretKey
+  m1 = md5.new()
+  m1.update(sign)
+  sign = m1.hexdigest()
+  myurl = myurl+'?appid='+appid+'&q='+urllib.quote(q)+'&from='+fromLang+'&to='+toLang+'&salt='+str(salt)+'&sign='+sign
 
-sign = appid+q+str(salt)+secretKey
-m1 = md5.new()
-m1.update(sign)
-sign = m1.hexdigest()
-myurl = myurl+'?appid='+appid+'&q='+urllib.quote(q)+'&from='+fromLang+'&to='+toLang+'&salt='+str(salt)+'&sign='+sign
- 
-try:
-    httpClient = httplib.HTTPConnection('api.fanyi.baidu.com')
-    httpClient.request('GET', myurl)
- 
-    #response是HTTPResponse对象
-    response = httpClient.getresponse()
-    print response.read()
-except Exception, e:
-    print e
-finally:
-    if httpClient:
-        httpClient.close()
+  try:
+      httpClient = httplib.HTTPConnection('api.fanyi.baidu.com')
+      httpClient.request('GET', myurl)
+
+      #response是HTTPResponse对象
+      response = httpClient.getresponse()
+      print response.read()
+      # return json format file
+      return response
+  except Exception, e:
+      print e
+  finally:
+      if httpClient:
+          httpClient.close()
