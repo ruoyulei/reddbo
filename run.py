@@ -2,6 +2,7 @@
 
 import demo
 import image
+import reddit
 import urllib
 import json
 import httplib
@@ -22,4 +23,19 @@ def test_img():
 	i = image.get_image_link(link)
 	print i
 
-test_img()
+def test_reddit():
+	r = reddit.get_reddit()
+	print r[3][0]
+
+def integ_test():
+	r = reddit.get_reddit()
+	for img in r[3]:
+		print img
+
+	'''
+	url = str(r[3][2])
+	print url
+	image.get_image_link(url)
+	'''
+
+integ_test()
