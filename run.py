@@ -1,3 +1,5 @@
+#coding=utf8
+
 import demo
 import urllib
 import json
@@ -9,4 +11,6 @@ result = demo.baidu_tranlate(q)
 
 dct = json.loads(result)
 
-print dct['trans_result']
+zn = dct['trans_result'][0]['dst']
+
+print zn.encode('utf-8')
