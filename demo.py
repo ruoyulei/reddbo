@@ -41,9 +41,9 @@ def baidu_tranlate( input_str ):
 
       #response是HTTPResponse对象
       response = httpClient.getresponse()
-      print response.read()
+      # print response.read()
       # return json format file
-      return response
+      return response.read()
   except Exception, e:
       print e
   finally:
