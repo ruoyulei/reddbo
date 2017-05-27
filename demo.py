@@ -10,8 +10,8 @@ def baidu_tranlate( input_str ):
   
   #  open file and read appid and secretKey
   with open('app_file.txt', 'r') as f:
-    my_appid = f.readline()
-    my_secretKey= f.readline()
+    my_appid = f.readline().rstrip()
+    my_secretKey= f.readline().rstrip()
   f.close() 
 
   appid = my_appid 
