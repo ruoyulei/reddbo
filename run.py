@@ -20,5 +20,6 @@ def test_trans():
 def test_img():
 	link = "https://www.reddit.com/r/funny/comments/6dnvs0/the_correct_way_to_eat_fried_chicken/"
 	i = image.get_image_link(link)
+	print i
 
 test_img()

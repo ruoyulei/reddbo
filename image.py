@@ -14,13 +14,11 @@ def get_image_link(my_url):
     
     soup = BS(html,'lxml')
     
-    temp = soup.findAll("div",{ "class" : "media-preview-content"})
-    t2 = temp[0]
+    temp = soup.select("div.media-preview-content [href]")
 
-    return t2
-    
-    #image_links = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', temp)
-    
-    #print image_links
-    # return imge_links[0]
+    return temp[0]['href']
+
+    # image_links = re.findall('a', temp[0])
+    # print image_links
+
 
