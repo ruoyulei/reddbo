@@ -6,7 +6,7 @@ import md5
 import urllib
 import random
 
-def baidu_tranlate( input_str,app_file ): 
+def baidu_tranlate( input_str ): 
   
   #  open file and read appid and secretKey
   with open('app_file.txt', 'r') as f:
