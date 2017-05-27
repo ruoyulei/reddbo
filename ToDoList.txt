@@ -1,0 +1,15 @@
+
+
+
+1.  How to creat sqlite by python, how to store and fetch data from sqlite by python
+
+https://www.tutorialspoint.com/sqlite/sqlite_python.htm
+
+2.  How to schedule our jobs
+
+https://docs.python.org/2/library/sched.html
+
+3. How can I install SQLite in Ubuntu
+
+https://www.quora.com/How-can-I-install-SQLite-in-Ubuntu-14-04-2-LTS
+
