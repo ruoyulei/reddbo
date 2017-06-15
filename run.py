@@ -1,8 +1,8 @@
 #coding=utf8
 
-import demo
-import image
-import reddit
+import BaiduTranslator
+import ImageGetter
+import RedditContent
 import urllib
 import json
 import httplib
@@ -10,32 +10,30 @@ import requests
 
 def test_trans():
 	q = "To be or not to be, that is the question."
-	result = demo.baidu_tranlate(q)
-
+	result = BaiduTranslator.translate(q)
 	dct = json.loads(result)
-
 	zn = dct['trans_result'][0]['dst']
 
 	print zn.encode('utf-8')
 
-def test_img():
-	link = "https://www.reddit.com/r/funny/comments/6dnvs0/the_correct_way_to_eat_fried_chicken/"
-	i = image.get_image_link(link)
-	print i
-
 def test_reddit():
-	r = reddit.get_reddit()
-	print r[3][0]
+	content = RedditContent.get_content()
+	print len(content)
+	print len(content[0])
+	print len(content[1])
+	print len(content[2])
+	print len(content[3])
+	for i in content[3]:
+		print i[-4:]
 
-def integ_test():
-	r = reddit.get_reddit()
-	for img in r[3]:
-		print img
+def test_image():
+	content = RedditContent.get_content()
+	for u in content[3]:
+		url = ImageGetter.get_image_url(u)
+		print url
 
-	'''
-	url = str(r[3][2])
-	print url
-	image.get_image_link(url)
-	'''
+def test_get_images():
+	content = RedditContent.get_content()
+	ImageGetter.download_images(content[3])
 
-integ_test()
+test_get_images()
