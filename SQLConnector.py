@@ -33,14 +33,19 @@ def insert_into_db(post_id):
 		try:
 			cur.execute('INSERT INTO succ VALUES(%s,%s)',(post_id,timestamps[0]))
 			db.commit()
+			db.close()
+			return True
 		except:
 			print "exception catched"
 			db.rollback()
+			db.close()
+			return False
 	else:
 		# already posted in the last 24 hours. DO NOT post
 		print post_id + " already posted"
+		db.close()
+		return False
 
-	db.close()
 
 # return: t[0] = current timestamp
 #		  t[1] = one day ago timestamp

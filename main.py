@@ -5,6 +5,7 @@ import time
 import schedule
 import json
 import WeiboAccess
+import SQLConnector
 
 global index_counter
 index_counter = 0
@@ -28,12 +29,12 @@ def runner():
 		if url == "":
 			translated_titles[i] += " "+content[3][i].encode('utf-8')
 
-	print "all content downloaded and ready"
+	print "all content downloaded"
 
 	schedule.every(1).minutes.do(lambda: post_weibo(translated_titles[index_counter],image_paths[index_counter]))
 	while 1:
-		#if index_counter >= len(translated_titles):
-		if index_counter >= 5:
+		if index_counter >= len(translated_titles):
+		#if index_counter >= 5:
 			index_counter = 0
 			break
 		schedule.run_pending()
@@ -43,15 +44,16 @@ def post_weibo(title,image_path):
 	global index_counter
 	index_counter += 1
 	if image_path == "NA":
+		print "image too large. not posting"
 		return
 	else:
-		print "posting weibo: "+title
-		WeiboAccess.post_weibo(title,image_path)
+		if SQLConnector.insert_into_db(title):
+			print "posting weibo: "+title
+			WeiboAccess.post_weibo(title,image_path)
 
 if __name__ == '__main__':
-	print "running..."
-	runner()
-	#schedule.every(1).minutes.do(weibo_text)
-	#while 1:
-	#	schedule.run_pending()
-	#	time.sleep(1)
+	print "start running..."
+	schedule.every(3).hours.do(runner())
+	while 1:
+		schedule.run_pending()
+		time.sleep(1)
