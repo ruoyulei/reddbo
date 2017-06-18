@@ -1,16 +1,56 @@
 import MySQLdb as sql
+import json
+import datetime
+from datetime import timedelta
+import time
 
-db = sql.connect(host='localhost',
-		user='bot',
-		passwd='ubuntu',
-		db='reddboDB')
+# Parameter: a string of post_id
 
-cur = db.cursor()
+def insert_into_db(post_id):
+	login_info = []
+	with open('db_credential.json') as data_file:
+		login_info = json.load(data_file)
+	data_file.close()
 
-cur.execute('SELECT * FROM succ')
+	db = sql.connect(host=login_info['host'],
+			user=login_info['user'],
+			passwd=login_info['passwd'],
+			db=login_info['db'])
 
-for row in cur.fetchall():
-	print row[0]
-	print row[1]
+	timestamps = get_time()
 
-db.close()
+	cur = db.cursor()
+
+	cur.execute('SELECT * FROM succ WHERE pTime >= \' %s \' AND pTime < \' %s \' AND postid=%s',
+		(timestamps[1],
+		timestamps[0],
+		post_id))
+
+	fetched = cur.fetchall()
+
+	if len(fetch) == 0:
+		# can post
+		try:
+			cur.execute('INSERT INTO succ VALUES(%s,%s)',(post_id,timestamps[0]))
+			cur.commit()
+		except:
+			print "exception catched"
+			cur.rollback()
+	else:
+		# already posted in the last 24 hours. DO NOT post
+		print post_id + "already posted"
+
+	db.close()
+
+# return: t[0] = current timestamp
+#		  t[1] = one day ago timestamp
+def get_time():
+	t = []
+	ts = time.time()
+	timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+
+	ys = datetime.datetime.today() - timedelta(days=1)
+	oneday_ago = ys.strftime('%Y-%m-%d %H:%M:%S')
+
+	t.append(timestamp)
+	t.append(oneday_ago)
