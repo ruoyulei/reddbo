@@ -21,24 +21,24 @@ def insert_into_db(post_id):
 
 	cur = db.cursor()
 
-	cur.execute('SELECT * FROM succ WHERE pTime >= \' %s \' AND pTime < \' %s \' AND postid=%s',
+	cur.execute('SELECT * FROM succ WHERE pTime >= %s AND pTime < %s AND postid=%s',
 		(timestamps[1],
 		timestamps[0],
 		post_id))
 
 	fetched = cur.fetchall()
 
-	if len(fetch) == 0:
+	if len(fetched) == 0:
 		# can post
 		try:
 			cur.execute('INSERT INTO succ VALUES(%s,%s)',(post_id,timestamps[0]))
-			cur.commit()
+			db.commit()
 		except:
 			print "exception catched"
-			cur.rollback()
+			db.rollback()
 	else:
 		# already posted in the last 24 hours. DO NOT post
-		print post_id + "already posted"
+		print post_id + " already posted"
 
 	db.close()
 
@@ -54,3 +54,5 @@ def get_time():
 
 	t.append(timestamp)
 	t.append(oneday_ago)
+	
+	return t

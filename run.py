@@ -7,6 +7,7 @@ import urllib
 import json
 import httplib
 import requests
+import SQLConnector
 
 def test_trans():
 	q = "To be or not to be, that is the question."
@@ -36,4 +37,17 @@ def test_get_images():
 	content = RedditContent.get_content()
 	ImageGetter.download_images(content[3])
 
-test_get_images()
+def test_time():
+	ts = time.time()
+	timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+	print timestamp
+
+	ys = datetime.datetime.today() - timedelta(days=1)
+	oneday_ago = ys.strftime('%Y-%m-%d %H:%M:%S')
+	print oneday_ago
+
+def test_sqlconnector():
+	info = "run test"
+	SQLConnector.insert_into_db(info)
+
+test_sqlconnector()
