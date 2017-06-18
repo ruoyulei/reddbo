@@ -30,7 +30,7 @@ def runner():
 			translated_titles[i] += " "+content[3][i].encode('utf-8')
 
 	print "all content downloaded"
-
+	post_weibo(translated_titles[index_counter],image_paths[index_counter])
 	schedule.every(8).minutes.do(lambda: post_weibo(translated_titles[index_counter],image_paths[index_counter]))
 	while 1:
 		if index_counter >= len(translated_titles):
