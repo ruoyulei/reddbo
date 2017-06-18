@@ -35,7 +35,7 @@ def get_content():
     subreddit = reddit.subreddit('popular')
 
     for submission in subreddit.hot(limit=25):
-        title.append(submission.title)  # Output: the submission's title
+        title.append(submission.title.encode('utf-8'))  # Output: the submission's title
         score.append(submission.score)  # Output: the submission's score
         id.append(submission.id)     # Output: the submission's ID
         url.append(submission.url)    # Output: the URL the submission points to

@@ -5,6 +5,7 @@ import httplib
 import md5
 import urllib
 import random
+import json
 
 def translate( input_str ): 
   #  open file and read appid and secretKey
@@ -41,7 +42,9 @@ def translate( input_str ):
       response = httpClient.getresponse()
       # print response.read()
       # return json format file
-      return response.read()
+      dct = json.loads(response.read())
+      zn = dct['trans_result'][0]['dst'].encode('utf-8')
+      return zn
   except Exception, e:
       print e
   finally:

@@ -43,7 +43,8 @@ def download_images(urls):
 			# TODO: downcast image to <= 5 MB
 			if (os.path.getsize(relative_path) / mb) > 5.0:
 				os.remove(relative_path)
-				images.append("")
+				# removed image will have a "NA" image path
+				images.append("NA")
 			else:
 				images.append(relative_path)
 		counter += 1

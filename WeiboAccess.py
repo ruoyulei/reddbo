@@ -56,11 +56,3 @@ def post_weibo(text,pic_path):
 		pic.close()
 
 	print('weibo posted')
-
-if __name__ == '__main__':
-	print "running..."
-	#schedule.every(1).minutes.do(weibo_text)
-	#while 1:
-	#	schedule.run_pending()
-	#	time.sleep(1)
-	# weibo_text()
