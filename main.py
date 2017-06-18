@@ -31,7 +31,7 @@ def runner():
 
 	print "all content downloaded"
 
-	schedule.every(1).minutes.do(lambda: post_weibo(translated_titles[index_counter],image_paths[index_counter]))
+	schedule.every(8).minutes.do(lambda: post_weibo(translated_titles[index_counter],image_paths[index_counter]))
 	while 1:
 		if index_counter >= len(translated_titles):
 		#if index_counter >= 5:
@@ -53,7 +53,8 @@ def post_weibo(title,image_path):
 
 if __name__ == '__main__':
 	print "start running..."
-	schedule.every(3).hours.do(runner())
+	runner()
+	schedule.every(4).hours.do(runner)
 	while 1:
 		schedule.run_pending()
 		time.sleep(1)
