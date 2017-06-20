@@ -13,7 +13,8 @@ if __name__ == '__main__':
 			if proc in a:
 				flag = True
 
-		if not flag:
+		if flag:
 			time.sleep(60)
 		else:
+			print 'starting service'
 			os.system('python main.py &')
