@@ -40,7 +40,7 @@ def runner():
 def post_all():
 	global index_counter,content_ready
 	if index_counter >= len(content_ready[0]):
-		break
+		return
 
 	post_weibo(content_ready[0][index_counter],content_ready[1][index_counter],content_ready[2][index_counter])
 
@@ -53,13 +53,16 @@ def post_weibo(title,image_path,postid):
 	else:
 		if SQLConnector.insert_into_db(postid):
 			print "posting weibo: "+title
-			WeiboAccess.post_weibo(title,image_path)
+			try:
+				WeiboAccess.post_weibo(title,image_path)
+			except:
+				post_weibo(title,image_path,postid)
 
 if __name__ == '__main__':
 	print "start running..."
 	runner()
-	schedule.every(4).hours.do(runner)
-	schedule.every(8).minutes.do(post_all)
+	schedule.every(3).hours.do(runner)
+	schedule.every(5).minutes.do(post_all)
 	while 1:
 		schedule.run_pending()
 		time.sleep(1)

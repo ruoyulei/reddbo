@@ -11,6 +11,7 @@ def get_content():
         agent = f.readline().rstrip()
         username = f.readline().rstrip()
         password = f.readline().rstrip()
+        topic = f.readline().rstrip()
     f.close()
     
 
@@ -32,7 +33,7 @@ def get_content():
     content = [title,score,id,url]
     
     
-    subreddit = reddit.subreddit('popular')
+    subreddit = reddit.subreddit(topic)
 
     for submission in subreddit.hot(limit=25):
         title.append(submission.title.encode('utf-8'))  # Output: the submission's title
