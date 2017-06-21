@@ -32,9 +32,9 @@ def runner():
 
 	print "all content downloaded"
 
-	content_ready[0] = translated_titles
-	content_ready[1] = image_paths
-	content_ready[2] = content[2]
+	content_ready.append(translated_titles)
+	content_ready.append(image_paths)
+	content_ready.append(content[2])
 	
 
 def post_all():
